@@ -1,0 +1,1 @@
+A scalable backend service powering a Lovable-style application. Built with modern architecture, secure authentication, real-time interactions, and optimized API performance for seamless user experiences.

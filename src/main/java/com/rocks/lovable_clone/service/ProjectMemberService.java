@@ -1,9 +1,6 @@
 package com.rocks.lovable_clone.service;
 
-import com.rocks.lovable_clone.dto.member.InviteMemberRequest;
-import com.rocks.lovable_clone.dto.member.MemberResponse;
-import com.rocks.lovable_clone.dto.member.UpdateMemberRoleRequest;
-import com.rocks.lovable_clone.entity.ProjectMember;
+import com.rocks.lovable_clone.dto.member.*;
 
 import java.util.List;
 
@@ -14,5 +11,8 @@ public interface ProjectMemberService {
 
     MemberResponse updateMemberRole(Long projectId, Long memberId, UpdateMemberRoleRequest request, Long userId);
 
-    MemberResponse deleteProjectMember(Long projectId, Long memberId, Long userId);
+    void removeProjectMember(Long projectId, Long memberId, Long userId);
+
+    AcceptResponse inviteRequestAcceptedOrNot(AcceptRequest acceptRequest);
+
 }

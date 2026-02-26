@@ -18,15 +18,12 @@ import java.time.Instant;
 @Table(name = "users")
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    String email;
-    String passwordHash;
+    String username;
+    String password;
     String name;
-
-    String avatarUrl;
 
     @CreationTimestamp
     Instant createdAt;
@@ -35,4 +32,5 @@ public class User {
     Instant updatedAt;
 
     Instant deletedAt; //soft delete
+
 }

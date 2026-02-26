@@ -2,5 +2,8 @@ package com.rocks.lovable_clone.dto.member;
 
 import com.rocks.lovable_clone.enums.ProjectRole;
 
-public record UpdateMemberRoleRequest(ProjectRole role) {
+import jakarta.validation.constraints.NotNull;
+
+public record UpdateMemberRoleRequest(
+        @NotNull ProjectRole role) {
 }

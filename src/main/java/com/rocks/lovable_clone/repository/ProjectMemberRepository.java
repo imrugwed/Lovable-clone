@@ -3,7 +3,10 @@ package com.rocks.lovable_clone.repository;
 import com.rocks.lovable_clone.entity.ProjectMember;
 import com.rocks.lovable_clone.entity.ProjectMemberId;
 import com.rocks.lovable_clone.entity.User;
+import com.rocks.lovable_clone.enums.ProjectRole;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,6 +17,12 @@ public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Pr
 
     List<ProjectMember> findByIdProjectId(Long projectId);
 
-    Optional<ProjectMember> findByUser(User user);
+    @Query("""
+            SELECT pm.projectRole FROM ProjectMember pm
+            WHERE pm.id.projectId = :projectId AND pm.id.userId = :userId
+            """)
+    Optional<ProjectRole> findRoleByProjectIdAndUserId(@Param("projectId") Long projectId,
+                                                       @Param("userId") Long userId);
 
+    Optional<ProjectMember> findByUser(User user);
 }

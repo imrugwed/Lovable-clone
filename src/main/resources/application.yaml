@@ -18,6 +18,16 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
 
+  ai:
+    openai:
+      api-key:
+      base-url: https://openrouter.ai/api
+      chat:
+        options:
+#          model: openai/gpt-5.2-codex
+          model: stepfun/step-3.5-flash:free
+          temperature: 0.0
+
 jwt:
   secret-key: as9b7aodlbjfkluosfd789ujeklfnlsduf90b8ha908w74tuqijvlckajdl
 

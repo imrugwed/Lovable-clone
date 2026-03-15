@@ -8,6 +8,7 @@ import com.rocks.lovable_clone.entity.ProjectMember;
 import com.rocks.lovable_clone.entity.ProjectMemberId;
 import com.rocks.lovable_clone.entity.User;
 import com.rocks.lovable_clone.enums.ProjectRole;
+import com.rocks.lovable_clone.error.BadRequestException;
 import com.rocks.lovable_clone.error.ResourceNotFoundException;
 import com.rocks.lovable_clone.mapper.ProjectMapper;
 import com.rocks.lovable_clone.repository.ProjectMemberRepository;
@@ -15,6 +16,7 @@ import com.rocks.lovable_clone.repository.ProjectRepository;
 import com.rocks.lovable_clone.repository.UserRepository;
 import com.rocks.lovable_clone.security.AuthUtil;
 import com.rocks.lovable_clone.service.ProjectService;
+import com.rocks.lovable_clone.service.SubscriptionService;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -36,9 +38,14 @@ public class ProjectServiceImpl implements ProjectService {
     ProjectMapper projectMapper;
     ProjectMemberRepository projectMemberRepository;
     AuthUtil authUtil;
+    SubscriptionService subscriptionService;
 
     @Override
     public ProjectResponse createProject(ProjectRequest request) {
+        if (!subscriptionService.canCreateNewProject()) {
+            throw new BadRequestException("User cannot create a New project with current Plan, Upgrade plan now.");
+        }
+
         Long userId = authUtil.getCurrentUserId();
 //        User owner = userRepository.findById(userId).orElseThrow(
 //                () -> new ResourceNotFoundException("User", userId.toString())
@@ -50,7 +57,6 @@ public class ProjectServiceImpl implements ProjectService {
                 .isPublic(false)
                 .build();
         project = projectRepository.save(project);
-
 
         ProjectMemberId projectMemberId = new ProjectMemberId(project.getId(), owner.getId());
         ProjectMember projectMember = ProjectMember.builder()

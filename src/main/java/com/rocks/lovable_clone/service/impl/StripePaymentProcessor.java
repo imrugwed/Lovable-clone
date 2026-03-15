@@ -7,6 +7,7 @@ import com.rocks.lovable_clone.dto.subscription.PortalResponse;
 import com.rocks.lovable_clone.entity.Plan;
 import com.rocks.lovable_clone.entity.User;
 import com.rocks.lovable_clone.enums.SubscriptionStatus;
+import com.rocks.lovable_clone.error.BadRequestException;
 import com.rocks.lovable_clone.error.ResourceNotFoundException;
 import com.rocks.lovable_clone.repository.PlanRepository;
 import com.rocks.lovable_clone.repository.UserRepository;
@@ -70,7 +71,7 @@ public class StripePaymentProcessor implements PaymentProcessor {
             } else {
                 params.setCustomer(stripeCustomerId); // stripe customer Id
             }
-            Session session = Session.create(params.build()); // making api call to the Strip Backend
+            Session session = Session.create(params.build()); // making api call to the Stripe Backend
             return new CheckoutResponse(session.getUrl());
         } catch (StripeException e) {
             throw new RuntimeException(e);
@@ -79,7 +80,26 @@ public class StripePaymentProcessor implements PaymentProcessor {
 
     @Override
     public PortalResponse openCustomerPortal() {
-        return null;
+        Long userId = authUtil.getCurrentUserId();
+        User user = getUser(userId);
+        String stripeCustomerId = user.getStripeCustomerId();
+
+        if (stripeCustomerId == null || stripeCustomerId.isEmpty()) {
+            throw new BadRequestException("User does not have a Stripe Customer Id, UserId:" + userId);
+        }
+
+        try {
+            var portalSession = com.stripe.model.billingportal.Session.create(
+                    com.stripe.param.billingportal.SessionCreateParams.builder()
+                            .setCustomer(stripeCustomerId)
+                            .setReturnUrl(frontendUrl)
+                            .build()
+            );
+
+            return new PortalResponse(portalSession.getUrl());
+        } catch (StripeException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

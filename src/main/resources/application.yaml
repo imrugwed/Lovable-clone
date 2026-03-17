@@ -4,8 +4,10 @@ spring:
     description: this is application
 
   datasource:
-    url: jdbc:postgresql://localhost:9000/testDB?sslmode=disable
-    username: testUser
+#    url: jdbc:postgresql://localhost:9000/testDB?sslmode=disable
+#    username: testUser
+    url: jdbc:postgresql://localhost:9010/pgvector-test
+    username: user
     password: password
     driver-class-name: org.postgresql.Driver
 
@@ -16,11 +18,11 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
+        format_sql: false
 
   ai:
     openai:
-      api-key:
+      api-key: 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
       base-url: https://openrouter.ai/api
       chat:
         options:
@@ -38,3 +40,14 @@ stripe:
     secret: whsec_30367c20879296c296f5936cd52b1a0e01bba945ddf4b727dad38881932eb50a
 
 client.url: http://localhost:8080
+
+logging:
+  level:
+    org.springframework.ai:
+      chat.client: DEBUG
+
+minio:
+  url: http://localhost:9000          # or minio:9000 if inside docker network
+  access-key: minioadmin
+  secret-key: minioadmin123
+  project-bucket: projects

@@ -3,6 +3,7 @@ package com.rocks.lovable_clone.mapper;
 import com.rocks.lovable_clone.dto.project.ProjectResponse;
 import com.rocks.lovable_clone.dto.project.ProjectSummaryResponse;
 import com.rocks.lovable_clone.entity.Project;
+import com.rocks.lovable_clone.enums.ProjectRole;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -13,8 +14,7 @@ public interface ProjectMapper {
 
     ProjectResponse toProjectResponse(Project project);
 
-    @Mapping(target = "projectName", source = "name")
-    ProjectSummaryResponse toProjectSummaryResponse(Project project);
+    ProjectSummaryResponse toProjectSummaryResponse(Project project, ProjectRole role);
 
     List<ProjectSummaryResponse> toListOfProjectSummaryResponse(List<Project> projects);
 

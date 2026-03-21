@@ -36,7 +36,7 @@ public class FileTreeContextAdvisor implements StreamAdvisor {
         return streamAdvisorChain.nextStream(augmentedChatClientRequest);
     }
 
-    private ChatClientRequest augmentRequestWithFileTree(ChatClientRequest request, Long projectId) {
+    /*private ChatClientRequest augmentRequestWithFileTree(ChatClientRequest request, Long projectId) {
 
         List<Message> incomingMessages = request.prompt().getInstructions();
 
@@ -56,9 +56,43 @@ public class FileTreeContextAdvisor implements StreamAdvisor {
             allMessages.add(systemMessage);
         }
 
-        List<FileNode> fileTree = projectFileService.getFileTree(projectId);
+        List<FileNode> fileTree = projectFileService.getFileTree(projectId).files();
         String fileTreeContext = "\n\n ---- FILE_TREE ----\n" + fileTree.toString();
         allMessages.add(new SystemMessage(fileTreeContext));
+
+        allMessages.addAll(userMessages);
+
+        return request
+                .mutate()
+                .prompt(new Prompt(allMessages, request.prompt().getOptions()))
+                .build();
+    }*/
+
+    // gemini
+    private ChatClientRequest augmentRequestWithFileTree(ChatClientRequest request, Long projectId) {
+
+        List<Message> incomingMessages = request.prompt().getInstructions();
+
+        Message systemMessage = incomingMessages.stream()
+                .filter(m -> m.getMessageType() == MessageType.SYSTEM)
+                .findFirst()
+                .orElse(null);
+
+        List<Message> userMessages = incomingMessages.stream()
+                .filter(m -> m.getMessageType() != MessageType.SYSTEM)
+                .toList();
+
+        List<Message> allMessages = new ArrayList<>();
+
+        List<FileNode> fileTree = projectFileService.getFileTree(projectId).files();
+        String fileTreeContext = "\n\n ---- FILE_TREE ----\n" + fileTree;
+
+        if (systemMessage != null) {
+            String mergedContent = systemMessage.getText() + fileTreeContext;
+            allMessages.add(new SystemMessage(mergedContent));
+        } else {
+            allMessages.add(new SystemMessage(fileTreeContext));
+        }
 
         allMessages.addAll(userMessages);
 

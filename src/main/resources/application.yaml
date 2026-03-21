@@ -28,7 +28,15 @@ spring:
         options:
 #          model: openai/gpt-5.2-codex
           model: stepfun/step-3.5-flash:free
+#          model: qwen/qwen3-coder:free
+#          model: nvidia/nemotron-3-super-120b-a12b:free
           temperature: 0.0
+
+#  ai:
+#    google:
+#      genai:
+#        api-key: AIzaSyBbbqyYWBCT0Q79jXK3_Bh_w4MQATQ1KEQ
+#        model: gemini-pro
 
 jwt:
   secret-key: as9b7aodlbjfkluosfd789ujeklfnlsduf90b8ha908w74tuqijvlckajdl

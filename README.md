@@ -3,15 +3,15 @@
 A production-ready Spring Boot (Java 21) backend that replicates platforms like Lovable and v0 by Vercel, enabling users to generate full-stack applications using AI, manage projects collaboratively, and deploy live previews dynamically.
 
 ✨ Features
-🤖 AI-powered code generation (multi-model support via OpenRouter)
-💬 Persistent chat-based project editing
-📁 Virtual project file system with context-aware AI updates
-👥 Team collaboration with RBAC
-🚀 Live preview deployments using Kubernetes
-💳 Subscription billing with Stripe
-📊 Usage tracking & quota enforcement
-☁️ Blob storage with MinIO (S3-compatible)
-🏗️ Tech Stack
+  🤖 AI-powered code generation (multi-model support via OpenRouter)
+  💬 Persistent chat-based project editing
+  📁 Virtual project file system with context-aware AI updates
+  👥 Team collaboration with RBAC
+  🚀 Live preview deployments using Kubernetes
+  💳 Subscription billing with Stripe
+  📊 Usage tracking & quota enforcement
+  ☁️ Blob storage with MinIO (S3-compatible)
+  🏗️ Tech Stack
 Backend
 Java 21
 Spring Boot (WebMVC)

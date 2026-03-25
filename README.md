@@ -1,41 +1,41 @@
-🚀 Lovable Clone – AI Powered Project Generation Platform
-
-A production-ready Spring Boot (Java 21) backend that replicates platforms like Lovable and v0 by Vercel, enabling users to generate full-stack applications using AI, manage projects collaboratively, and deploy live previews dynamically.
+<div align="center">
+🚀 Lovable Clone
+AI-Powered Full-Stack Project Generation Platform
+A production-ready Spring Boot (Java 21) backend that replicates platforms like Lovable and v0 by Vercel — enabling users to generate full-stack applications using AI, manage projects collaboratively, and deploy live previews dynamically.
+[Show Image](https://openjdk.org/projects/jdk/21/)
+[Show Image](https://spring.io/projects/spring-boot)
+[Show Image](https://www.postgresql.org/)
+[Show Image](https://redis.io/)
+[Show Image](https://kubernetes.io/)
+</div>
 
 ✨ Features
-  🤖 AI-powered code generation (multi-model support via OpenRouter)
-  💬 Persistent chat-based project editing
-  📁 Virtual project file system with context-aware AI updates
-  👥 Team collaboration with RBAC
-  🚀 Live preview deployments using Kubernetes
-  💳 Subscription billing with Stripe
-  📊 Usage tracking & quota enforcement
-  ☁️ Blob storage with MinIO (S3-compatible)
-  🏗️ Tech Stack
+Feature Description 🤖 AI Code Generation: Multi-model support via OpenRouter (Gemini, Grok, GPT-4)💬 Persistent Chat Editing: Iterative, context-aware project editing via chat📁 Virtual File SystemAI-driven create/update/delete file operations👥 Team CollaborationProject-level RBAC for multi-user workflows🚀 Live DeploymentsDynamic preview URLs via Kubernetes💳 Subscription BillingStripe-powered plans with quota enforcement📊 Usage TrackingPer-user AI call and project limits☁️ Object StorageMinIO (S3-compatible) blob storage
+
+🏗️ Tech Stack
 Backend
-Java 21
-Spring Boot (WebMVC)
-Spring Security + JWT
-Spring Data JPA (Hibernate)
-MapStruct + Lombok
+
+Java 21 · Spring Boot (WebMVC) · Spring Security + JWT
+Spring Data JPA (Hibernate) · MapStruct · Lombok
+
 Infrastructure
-PostgreSQL – Primary database
-Redis – Caching & memory
-MinIO – Object storage (S3-compatible)
-Kubernetes – Dynamic container deployments
-Docker Compose – Local environment setup
+
+PostgreSQL — Primary relational database
+Redis — Caching & in-memory state
+MinIO — S3-compatible object storage
+Kubernetes — Dynamic container deployments
+Docker Compose — Local environment orchestration
+
 AI Layer
-Spring AI
-OpenRouter API
-Supports models like:
-Google Gemini
-Grok
-OpenAI models
+
+Spring AI + OpenRouter API
+Supported models: Google Gemini, Grok, OpenAI models
+
 Payments
-Stripe API
-Checkout sessions
-Subscription lifecycle
-Webhook handling
+
+Stripe API — Checkout sessions, subscription lifecycle, webhook handling
+
+
 📦 Architecture Overview
 User → REST API → Auth → Project Service → AI Orchestration
                                       ↓
@@ -46,85 +46,90 @@ User → REST API → Auth → Project Service → AI Orchestration
                             File System Mutations
                                       ↓
                            Kubernetes Deployment
-
 The system orchestrates:
 
 LLM-driven code generation
-Context-aware file updates
+Context-aware incremental file updates
 Structured tool-calling execution
 Live project deployments
 Subscription-based usage enforcement
+
+
 📁 Project Structure
 com.codingshuttle.projects.lovable_clone
 │
-├── auth/                  → Authentication & JWT
-├── user/                  → User management
-├── project/               → Project CRUD & file system
-├── chat/                  → Chat sessions & events
-├── ai/                    → AI orchestration & tool parsing
-├── deployment/            → Kubernetes preview deployments
-├── subscription/          → Plans, billing & usage
-├── common/                → Shared configs & utilities
-🔐 Authentication
-JWT-based stateless authentication
-Role-based authorization
-Project-level RBAC for collaboration
-🤖 AI Code Generation Flow
-User sends a prompt via Chat API
-System injects:
-Current file tree
-Relevant file contents
-LLM responds with:
-Structured tool calls (create/update/delete files)
-Backend parses response
-File system updates are applied
-Changes are persisted
-Optional deployment triggered
-🚀 Deployment System
+├── auth/            → Authentication & JWT
+├── user/            → User management
+├── project/         → Project CRUD & virtual file system
+├── chat/            → Chat sessions & streaming events
+├── ai/              → AI orchestration & tool call parsing
+├── deployment/      → Kubernetes preview deployments
+├── subscription/    → Plans, billing & usage enforcement
+└── common/          → Shared configs & utilities
 
+🔐 Authentication
+
+Stateless JWT-based authentication
+Role-based authorization
+Project-level RBAC for team collaboration
+
+
+🤖 AI Code Generation Flow
+1. User sends prompt via Chat API
+       ↓
+2. System injects file tree + relevant file contents
+       ↓
+3. LLM responds with structured tool calls
+       ↓
+4. Backend parses tool calls (create / update / delete)
+       ↓
+5. File system mutations are applied & persisted
+       ↓
+6. Optional deployment triggered
+
+🚀 Deployment System
 The DeploymentService:
 
 Builds container workloads
-Pushes to Kubernetes
-Exposes preview URLs
-Manages lifecycle (restart/terminate)
+Pushes to Kubernetes cluster
+Exposes live preview URLs
+Manages container lifecycle (restart / terminate)
 
-Requires a connected Kubernetes cluster.
+
+⚠️ Requires a connected Kubernetes cluster (local or remote).
+
 
 💳 Subscription System
 Plans
-Free
-Pro
-Premium
+
+Free · Pro · Premium
+
 Features
-AI usage quotas
-Project limits
+
+AI usage quotas per plan
+Project creation limits
 Export limits
 Stripe checkout session creation
-Webhook event handling
-Subscription status syncing
+Webhook event handling & subscription status sync
+
+
 🛠️ Local Development Setup
-1️⃣ Prerequisites
+Prerequisites
+
 Java 21
-Docker
+Docker & Docker Compose
 Kubernetes cluster (local or remote)
 Maven
-2️⃣ Clone Repository
-git clone https://github.com/your-username/lovable-clone.git
+
+1. Clone the Repository
+bashgit clone https://github.com/your-username/lovable-clone.git
 cd lovable-clone
-3️⃣ Start Infrastructure Services
-docker-compose -f services.docker-compose.yml up -d
-
-This will start:
-
-PostgreSQL
-Redis
-MinIO
-4️⃣ Configure Environment
-
+2. Start Infrastructure Services
+bashdocker-compose -f services.docker-compose.yml up -d
+This starts PostgreSQL, Redis, and MinIO.
+3. Configure Environment
 Update application.yaml:
-
-spring:
+yamlspring:
   datasource:
     url: jdbc:postgresql://localhost:5432/lovable
     username: postgres
@@ -143,79 +148,75 @@ minio:
   url: http://localhost:9000
   access-key: minio
   secret-key: minio123
-5️⃣ Run Application
-./mvnw spring-boot:run
+4. Run the Application
+bash./mvnw spring-boot:run
+The app runs at http://localhost:8080.
 
-App runs on:
+📡 API Reference
+MethodEndpointDescriptionPOST/api/v1/auth/signupRegister a new userPOST/api/v1/auth/loginAuthenticate & get JWTPOST/api/v1/projectsCreate a new projectGET/api/v1/projectsList all projectsGET/api/v1/projects/{id}Get project by IDPOST/api/v1/chat/{projectId}Send prompt to AIPOST/api/v1/deploy/{projectId}Deploy project previewPOST/api/v1/subscriptions/checkoutCreate Stripe checkout session
 
-http://localhost:8080
-📡 API Overview
-Auth
-POST /api/v1/auth/signup
-POST /api/v1/auth/login
-Projects
-POST /api/v1/projects
-GET /api/v1/projects
-GET /api/v1/projects/{id}
-Chat & AI
-POST /api/v1/chat/{projectId}
-Deployment
-POST /api/v1/deploy/{projectId}
-Subscription
-POST /api/v1/subscriptions/checkout
-Stripe webhook endpoint
 🧠 Key Design Concepts
 Context Injection
-
-The FileTreeContextAdvisor injects project structure into prompts to allow incremental changes rather than regeneration.
-
+FileTreeContextAdvisor injects the current project file tree into every AI prompt, enabling incremental updates rather than full regeneration.
 Tool Calling
+AI responses are parsed into structured commands by LlmResponseParser:
 
-AI responses are structured into actionable commands:
-
-Create file
-Update file
-Delete file
-
-Parsed via LlmResponseParser.
+create_file
+update_file
+delete_file
 
 Usage Enforcement
-
-UsageService blocks:
+UsageService enforces plan limits by blocking:
 
 AI calls beyond quota
 Project creation beyond plan limits
+
+
 🧪 Testing
-./mvnw test
-📈 Production Considerations
-Enable HTTPS
-Secure Stripe webhooks
-Use managed PostgreSQL
-Use managed Redis
-Configure Kubernetes autoscaling
-Store MinIO data persistently
-Add centralized logging (ELK / Grafana)
+bash./mvnw test
+
+📈 Production Checklist
+
+ Enable HTTPS / TLS termination
+ Secure Stripe webhook endpoint
+ Use managed PostgreSQL (e.g., AWS RDS)
+ Use managed Redis (e.g., ElastiCache)
+ Configure Kubernetes autoscaling (HPA)
+ Persist MinIO data with durable storage
+ Set up centralized logging (ELK Stack / Grafana Loki)
+
+
 🗺️ Roadmap
+
  GitHub integration
  Code diff viewer
  Real-time collaboration (WebSockets)
- Background queue system
+ Background job queue system
  Multi-region deployments
  Project templates marketplace
-🤝 Contributing
-Fork repository
-Create feature branch
-Commit changes
-Open Pull Request
-📄 License
 
-MIT License
+
+🤝 Contributing
+
+Fork the repository
+Create a feature branch (git checkout -b feature/amazing-feature)
+Commit your changes (git commit -m 'Add amazing feature')
+Push to the branch (git push origin feature/amazing-feature)
+Open a Pull Request
+
+
+📄 License
+Distributed under the MIT License. See LICENSE for details.
 
 ⭐ Acknowledgements
-
-Inspired by platforms like:
+Inspired by:
 
 Lovable
 v0 by Vercel
 Replit AI
 Cursor
+
+
+<div align="center">
+  <sub>Built with ☕ Java, 🍃 Spring Boot, and a little AI magic.</sub>
+</div>
